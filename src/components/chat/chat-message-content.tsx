@@ -138,7 +138,7 @@ function SkillsCard({ skills }: { skills: any[] }) {
 function ContactCard({ contact }: { contact: any }) {
   return (
     <div className="bg-accent/50 border-border/60 flex w-full max-w-xl items-start gap-3 rounded-2xl border p-3 shadow-sm">
-      <CompactImage src="/krishna-photo-white.png" alt={contact.name} />
+      <CompactImage src="/AI Profile.png" alt={contact.name} />
       <div className="flex min-w-0 flex-col">
         <div className="text-foreground truncate text-sm font-semibold">{contact.name}</div>
         <div className="text-muted-foreground truncate text-xs">{contact.handle}</div>
