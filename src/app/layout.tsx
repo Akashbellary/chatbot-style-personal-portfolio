@@ -51,12 +51,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/nanobanana-Photoroom.png",
+        url: "/AI Profile.png",
         sizes: "any",
       }
     ],
-    shortcut: "/nanobanana-Photoroom.png?v=2",
-    apple: "/nanobanana-Photoroom.png?v=2",
+    shortcut: "/AI Profile.png?v=2",
+    apple: "/AI Profile.png?v=2",
   },
 };
 
