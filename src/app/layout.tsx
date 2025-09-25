@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Akash Portfolio",
   description: "Interactive portfolio with an AI-powered Memoji that answers questions about me, my skills, and my experience",
   keywords: [
-    "Krishna", 
+    "Akash", 
     "Portfolio", 
     "Developer", 
     "AI", 
@@ -29,34 +29,34 @@ export const metadata: Metadata = {
   ],
   authors: [
     {
-      name: "Krishna",
-      url: "https://krishnabantola.site",
+      name: "Akash BR",
+      url: "https://akash-chatbot.vercel.app/",
     },
   ],
-  creator: "Krishna",
+  creator: "Akash",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://krishnabantola.site",
-    title: "Krishna Portfolio",
-    description: "Interactive portfolio with an AI-powered Memoji that answers questions about me",
-    siteName: "Krishna Portfolio",
+    url: "https://akash-chatbot.vercel.app/",
+    title: "Akash Portfolio",
+    description: "Interactive AI Chatbot style portfolio",
+    siteName: "Akash Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Krishna Portfolio",
+    title: " Portfolio",
     description: "Interactive portfolio with an AI-powered Memoji that answers questions about me",
-    creator: "@Krishna",
+    creator: "",
   },
   icons: {
     icon: [
       {
-        url: "/favicon1.png",
+        url: "/nanobanana-Photoroom.png",
         sizes: "any",
       }
     ],
-    shortcut: "/favicon.svg?v=2",
-    apple: "/apple-touch-icon.svg?v=2",
+    shortcut: "/nanobanana-Photoroom.png?v=2",
+    apple: "/nanobanana-Photoroom.png?v=2",
   },
 };
 
