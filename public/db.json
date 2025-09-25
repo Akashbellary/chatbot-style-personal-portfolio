@@ -1,0 +1,249 @@
+{
+  "personal": {
+    "name": "Akash BR",
+    "age": "23 years old",
+    "location": "JP Nagar, Bangalore, Karnataka, India – 560078",
+    "description": "I am a passionate Computer Science Engineering graduate (with a specialization in Artificial Intelligence) with a strong interest in Artificial Intelligence and Machine Learning. I am committed to building a career in the AI/ML domain. Fluent in Kannada (native), English, Hindi, and Telugu, with excellent communication and collaborative skills. I am currently seeking opportunities to apply and grow my expertise in NLP and AI technologies.",
+    "profileImage": "/AI Profile.png",
+    "fallbackImage": "https://images.unsplash.com/photo-1610216705422-caa3fcb6d158?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3",
+    "tags": ["AI", "Developer", "Bangalore", "ML Enthusiast", "Researcher"],
+    "resume": "https://drive.google.com/file/d/1gwCY7jdtD-wJnr9grwomkNqc8dd4Ey0G/view?usp=sharing"
+  },
+  "skills": [
+    {
+      "category": "Programming Languages",
+      "skills": ["Python", "SQL", "Java", "HTML", "CSS"]
+    },
+    {
+      "category": "Domains",
+      "skills": ["Artificial Intelligence", "Machine Learning", "Deep Learning", "Natural Language Processing", "Computer Vision", "MLOps"]
+    },
+    {
+      "category": "Tools & Frameworks",
+      "skills": ["Sklearn", "Pandas", "NLTK", "Spacy", "TensorFlow", "Django", "SpringBoot", "JDBC", "3D Modelling", "Figma", "Blender", "Linux", "Data structures", "Vector DB", "AWS", "Docker", "MLFlow"]
+    },
+    {
+      "category": "Soft Skills",
+      "skills": ["Communication", "Problem-Solving", "Adaptability", "Learning Agility", "Teamwork", "Creativity", "Focus"]
+    }
+  ],
+  "projects": [
+    {
+      "title": "FinMM-Edit: Financial Correction System",
+      "category": "AI Research Project",
+      "description": "Advanced Financial Document Correction System combining rule-based processing and LLMs for high-accuracy OCR and context correction.",
+      "techStack": ["Python", "LLMs", "OCR", "NLP"],
+      "date": "2025",
+      "links": [
+        { "name": "research paper", "url": "https://www.jetir.org/papers/JETIR2506166.pdf" },
+        { "name": "github", "url": "https://github.com/Akashbellary" }
+      ],
+      "images": [{ "src": "/ProjectImages/FinMM.jpg", "alt": "FinMM-Edit System" }],
+      "thumbnail": "/ProjectImages/FinMM.jpg"
+    },
+    {
+      "title": "Plant Disease Detection System",
+      "category": "AI/Computer Vision",
+      "description": "CNN-based plant disease diagnosis system with tailored solution recommendations.",
+      "techStack": ["CNN", "TensorFlow", "Computer Vision", "Agriculture"],
+      "date": "2024",
+      "links": [
+        { "name": "website", "url": "https://plant-disease-detection-solution-recommendation.streamlit.app/" },
+        { "name": "github", "url": "https://github.com/Akashbellary/plant-disease-detection-solution-recommendation" }
+      ],
+      "images": [{ "src": "ProjectImages/Plant disease detection system.jpg", "alt": "Plant Disease Detection" }],
+      "thumbnail": "ProjectImages/Plant disease detection system.jpg"
+    },
+    {
+      "title": "AI Web Chatbot",
+      "category": "AI/NLP Project",
+      "description": "Developed an NLP-driven chatbot using Python, NLTK, TensorFlow, and Keras with a dense deep learning model.",
+      "techStack": ["Python", "TensorFlow", "NLTK", "Keras"],
+      "date": "2024",
+      "links": [{ "name": "github", "url": "https://github.com" }],
+      "images": [{ "src": "/placeholder.svg?height=200&width=400", "alt": "AI Web Chatbot" }],
+      "thumbnail": "/placeholder.svg?height=200&width=400"
+    },
+    {
+      "title": "3D Asset Store",
+      "category": "Full Stack",
+      "description": "Platform for artists to post and sell 3D models and scans with CRUD and search.",
+      "techStack": ["HTML/CSS", "Django", "Python", "CRUD"],
+      "date": "2024",
+      "links": [{ "name": "github", "url": "https://github.com/Akashbellary/Assets-store" }],
+      "images": [{ "src": "ProjectImages/3DMarket.jpg", "alt": "3D Asset Store" }],
+      "thumbnail": "ProjectImages/3DMarket.jpg"
+    },
+    {
+      "title": "Face Expression Based Movie Recommendation System",
+      "category": "AI/Computer Vision",
+      "description": "Recommends movies based on user mood detected via facial expressions.",
+      "techStack": ["Computer Vision", "Machine Learning", "OpenCV", "Recommendation System"],
+      "date": "2024",
+      "links": [
+        { "name": "website", "url": "https://face-expression-based-movie-recommendation-system.streamlit.app/" },
+        { "name": "github", "url": "https://github.com/Akashbellary/face_expression_based_movie_recommendation_system" }
+      ],
+      "images": [{ "src": "/ProjectImages/FEBMRS.jpg", "alt": "Movie Recommendation System" }],
+      "thumbnail": "/ProjectImages/FEBMRS.jpg"
+    },
+    {
+      "title": "Data Science Portfolio",
+      "category": "Data Science",
+      "description": "Collection of ML and data analysis projects: Stock Forecasting, Spam Detection, Sentiment Analysis, Medical Data, House Price Prediction, Speech Recognition.",
+      "techStack": ["NumPy", "Pandas", "Matplotlib", "Scikit-learn"],
+      "date": "2024",
+      "links": [{ "name": "github", "url": "https://github.com" }],
+      "images": [{ "src": "ProjectImages/Datascience.jpg", "alt": "Data Science Projects" }],
+      "thumbnail": "ProjectImages/Datascience.jpg"
+    },
+    {
+      "title": "Fine-tuned LLM to Answer Customer Queries",
+      "category": "AI Project",
+      "description": "Smart assistant built by fine-tuning GPT-2 on haircut queries for conversational Q&A.",
+      "techStack": ["LLM Fine-Tuning", "NLP", "GPT-2", "Python"],
+      "date": "2024",
+      "links": [{ "name": "github", "url": "https://github.com/Akashbellary/Finetuning-LLM" }],
+      "images": [{ "src": "/ProjectImages/Fine Tuning LLM GPT2.jpg", "alt": "LLM Fine Tuning" }],
+      "thumbnail": "/ProjectImages/Fine Tuning LLM GPT2.jpg"
+    },
+    {
+      "title": "Movie Recommendation System",
+      "category": "Machine Learning Project",
+      "description": "Created a movie recommendation system using TF-IDF Vectorizer and cosine similarity for analyzing movie details.",
+      "techStack": ["Python", "Pandas", "NumPy"],
+      "date": "2024",
+      "links": [
+        { "name": "website", "url": "https://recommendmovie007.streamlit.app/" },
+        { "name": "github", "url": "https://github.com/Akashbellary/recommendmovie" }
+      ],
+      "images": [{ "src": "/ProjectImages/Movie recommendation system.jpg", "alt": "Movie Recommendation System" }],
+      "thumbnail": "/ProjectImages/Movie recommendation system.jpg"
+    },
+    {
+      "title": "Speech Recognition System",
+      "category": "AI Project",
+      "description": "Built a Speech Recognition System using Python, IBM Watson Speech-to-Text API, and pyttsx3 for text-to-speech.",
+      "techStack": ["Python", "IBM Watson API", "pyttsx3"],
+      "date": "2024",
+      "links": [],
+      "images": [],
+      "thumbnail": ""
+    },
+    {
+      "title": "EmailTriageAI - AI Powered Email Management System",
+      "category": "Full Stack + AI",
+      "description": "Unified email dashboard with AI-powered classification, insights, and search.",
+      "techStack": ["Flask", "MongoDB", "NVIDIA Build API", "AI Integration", "Full Stack"],
+      "date": "2025",
+      "links": [{ "name": "github", "url": "https://github.com/Akashbellary/MailManager-application" }],
+      "images": [{ "src": "/ProjectImages/MailManager.jpg", "alt": "EmailTriageAI" }],
+      "thumbnail": "/ProjectImages/MailManager.jpg"
+    },
+    {
+      "title": "Reddit Persona Generator",
+      "category": "AI/NLP",
+      "description": "AI-powered profiling of Reddit users using embeddings, Pinecone, and NVIDIA Llama.",
+      "techStack": ["Flask", "Reddit API", "SentenceTransformers", "Pinecone", "NVIDIA Llama", "NLP"],
+      "date": "2025",
+      "links": [{ "name": "github", "url": "https://github.com/Akashbellary/reddit_user_persona" }],
+      "images": [{ "src": "/ProjectImages/Reddit_Persona.jpg", "alt": "Reddit Persona Generator" }],
+      "thumbnail": "/ProjectImages/Reddit_Persona.jpg"
+    },
+    {
+      "title": "Mosquito Sentinel - AI-Powered Mosquito Species Detection",
+      "category": "AI/Deep Learning",
+      "description": "Real-time mosquito species detection from wingbeat audio for disease monitoring.",
+      "techStack": ["PyTorch", "Streamlit", "Deep Learning", "HumBugDB", "Audio Classification"],
+      "date": "2025",
+      "links": [
+        { "name": "website", "url": "https://mosquito-species-detection.streamlit.app/" },
+        { "name": "github", "url": "https://github.com/Akashbellary/mosquito_species_detection_and_species_information" }
+      ],
+      "images": [{ "src": "/ProjectImages/mosquito_species.jpg", "alt": "Mosquito Sentinel" }],
+      "thumbnail": "/ProjectImages/mosquito_species.jpg"
+    },
+    {
+      "title": "CampaignIO – Influencer Discovery & Outreach",
+      "category": "Full Stack",
+      "description": "Platform to discover Instagram creators and manage outreach in CRM-like workspace.",
+      "techStack": ["Next.js", "React", "TypeScript", "Flask", "Node.js", "Puppeteer", "MongoDB Atlas"],
+      "date": "2025",
+      "links": [
+        { "name": "website", "url": "https://campaignio.onrender.com/" },
+        { "name": "github", "url": "https://github.com/Akashbellary/influencer_outreach_agent" }
+      ],
+      "images": [{ "src": "/ProjectImages/CampaignIO.gif", "alt": "CampaignIO" }],
+      "thumbnail": "/ProjectImages/CampaignIO.gif"
+    }
+  ],
+  "contact": {
+    "name": "Akash BR",
+    "email": "akashbellary007@gmail.com",
+    "handle": "",
+    "socials": [
+      { "name": "LinkedIn", "url": "https://www.linkedin.com/in/akash-br-b86a94219/" },
+      { "name": "Portfolio", "url": "https://ashsec-portfolio.vercel.app/" },
+      { "name": "Leetcode", "url": "https://leetcode.com/u/Akash_BR/" },
+      { "name": "Hackerrank", "url": "https://www.hackerrank.com/profile/AkashBellary" },
+      { "name": "Github", "url": "https://github.com/Akashbellary" }
+    ]
+  },
+  "experience": [
+    {
+      "company": "Way2AgriBusiness",
+      "role": "Machine Learning and Django Developer Intern",
+      "description": "Developed a crop suitability prediction model using machine learning and a CNN-based plant disease detection system that identifies issues, explains causes, and suggests solutions. Enhanced and debugged key features on their official websites to improve user experience."
+    },
+    {
+      "company": "TNS India Foundation",
+      "role": "Full Stack Developer (Project-Based Training)",
+      "description": "Built a Placement Management System using Java, STS, and PostgreSQL to manage placement data for students and recruiters."
+    }
+  ],
+  "achievements": [
+    {
+      "title": "Hackerrank Badges",
+      "details": ["5★ Gold Badge in Python", "3★ Silver Badge in SQL, C++, Java"]
+    },
+    {
+      "title": "Leetcode",
+      "details": ["Solved 400+ problems"]
+    },
+    {
+      "title": "Research Publications",
+      "details": [
+        "FinMM-Edit: A Context-Aware Correction Layer for OCR and Table Extraction Errors in Financial Documents",
+        "Cloud Computing for Smart Healthcare System"
+      ],
+      "links": [
+        { "name": "FinMM-Edit Paper", "url": "https://www.jetir.org/papers/JETIR2506166.pdf" }
+      ]
+    },
+    {
+      "title": "Hackathons & Competitions",
+      "details": ["AI Hiring Show Hackathon by Rabbitt AI", "Amazon ML Challenge 2025"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Jain University, Bangalore",
+      "degree": "BTech CSE (Specialization in AI)",
+      "duration": "Aug 2021 - May 2025",
+      "score": "78%"
+    },
+    {
+      "institution": "Sri Guru PU College, Hospete",
+      "degree": "12th (Computer Science)",
+      "duration": "June 2019 - May 2021",
+      "score": "76%"
+    },
+    {
+      "institution": "TMAES DAV Public School, Hospete",
+      "degree": "10th (CBSE)",
+      "duration": "June 2018 - May 2019",
+      "score": "70%"
+    }
+  ]
+}
+
