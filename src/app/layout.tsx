@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -69,7 +70,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="icon" href="/favicon.svg" sizes="any" />
+        <link rel="icon" href="/Adobe Express - Adobe Express - Flowing_Paint_Hash_Symbol_Animation.gif" sizes="any" />
       </head>
       <body
         className={cn(
@@ -82,6 +83,8 @@ export default function RootLayout({
           defaultTheme="light"
           enableSystem={false}
         >
+          {/* Global Theme Toggle */}
+          <ThemeToggle />
           <main className="flex min-h-screen flex-col">
             {children}
           </main>

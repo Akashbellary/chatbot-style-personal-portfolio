@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { useTheme } from 'next-themes';
 
 // Component imports
 import ChatBottombar from '@/components/chat/chat-bottombar';
@@ -16,7 +17,7 @@ import {
   ChatBubbleMessage,
 } from '@/components/ui/chat/chat-bubble';
 import WelcomeModal from '@/components/welcome-modal';
-import { Info } from 'lucide-react';
+import { Info, Calendar } from 'lucide-react';
 import HelperBoost from './HelperBoost';
 
 // ClientOnly component for client-side rendering
@@ -66,6 +67,7 @@ const MOTION_CONFIG = {
 };
 
 const Chat = () => {
+  const { theme } = useTheme();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('query');
@@ -312,23 +314,23 @@ const Chat = () => {
 
   return (
     <div className="relative h-screen overflow-hidden">
-      <div className="absolute top-6 right-8 z-51 flex flex-col-reverse items-center justify-center gap-1 md:flex-row">
+      <div className="absolute top-6 right-36 z-51 flex flex-col-reverse items-center justify-center gap-2 md:flex-row">
         <WelcomeModal
           trigger={
             <div className="hover:bg-accent cursor-pointer rounded-2xl px-3 py-1.5">
-              <Info className="text-accent-foreground h-8" />
+              <Calendar className="text-accent-foreground h-8" />
             </div>
           }
         />
-        
       </div>
 
       {/* Fixed Avatar Header with Gradient */}
       <div
         className="fixed top-0 right-0 left-0 z-50"
         style={{
-          background:
-            'linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 30%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%)',
+          background: theme === 'dark'
+            ? 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.95) 20%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0) 100%)'
+            : 'linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 20%, rgba(255, 255, 255, 0.8) 40%, rgba(255, 255, 255, 0) 100%)',
         }}
       >
         <div
@@ -338,7 +340,11 @@ const Chat = () => {
             <div className="absolute left-4 top-0">
               <button
                 onClick={() => (window.location.href = '/')}
-                className="rounded-full border border-neutral-200 bg-white/80 px-3 py-1 text-sm text-neutral-700 shadow-sm hover:bg-white"
+                className={`rounded-full border px-3 py-1 text-sm shadow-sm transition-colors ${
+                  theme === 'dark'
+                    ? 'border-neutral-600 bg-gray-800/80 text-neutral-200 hover:bg-gray-700'
+                    : 'border-neutral-200 bg-white/80 text-neutral-700 hover:bg-white'
+                }`}
               >
                 Home
               </button>
@@ -356,18 +362,22 @@ const Chat = () => {
             {latestUserMessage && !currentAIMessage && (
               <motion.div
                 {...MOTION_CONFIG}
-                className="ml-auto flex max-w-3xl px-4 justify-end"
+                className="w-full px-4"
               >
-                <ChatBubble variant="sent">
-                  <ChatBubbleMessage>
-                    <ChatMessageContent
-                      message={latestUserMessage}
-                      isLast={true}
-                      isLoading={false}
-                      reload={() => Promise.resolve(null)}
-                    />
-                  </ChatBubbleMessage>
-                </ChatBubble>
+                <div className="flex justify-end w-full">
+                  <div className="max-w-[80%] w-fit">
+                    <ChatBubble variant="sent">
+                      <ChatBubbleMessage>
+                        <ChatMessageContent
+                          message={latestUserMessage}
+                          isLast={true}
+                          isLoading={false}
+                          reload={() => Promise.resolve(null)}
+                        />
+                      </ChatBubbleMessage>
+                    </ChatBubble>
+                  </div>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -375,10 +385,10 @@ const Chat = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="container mx-auto flex h-full max-w-3xl flex-col">
+      <div className="container mx-auto flex h-full max-w-3xl flex-col overflow-hidden">
         {/* Scrollable Chat Content */}
         <div
-          className="flex-1 overflow-y-auto px-2"
+          className="flex-1 overflow-y-auto overflow-x-hidden"
           style={{ paddingTop: `${headerHeight}px` }}
         >
           <AnimatePresence mode="wait">
@@ -393,17 +403,21 @@ const Chat = () => {
             ) : currentAIMessage ? (
               <div className="pb-4">
                 {latestUserMessage && (
-                  <div className="ml-auto mb-2 flex max-w-3xl px-4 justify-end">
-                    <ChatBubble variant="sent">
-                      <ChatBubbleMessage>
-                        <ChatMessageContent
-                          message={latestUserMessage}
-                          isLast={false}
-                          isLoading={false}
-                          reload={() => Promise.resolve(null)}
-                        />
-                      </ChatBubbleMessage>
-                    </ChatBubble>
+                  <div className="mb-2 w-full px-4">
+                    <div className="flex justify-end w-full">
+                      <div className="max-w-[80%] w-fit">
+                        <ChatBubble variant="sent">
+                          <ChatBubbleMessage>
+                            <ChatMessageContent
+                              message={latestUserMessage}
+                              isLast={false}
+                              isLoading={false}
+                              reload={() => Promise.resolve(null)}
+                            />
+                          </ChatBubbleMessage>
+                        </ChatBubble>
+                      </div>
+                    </div>
                   </div>
                 )}
                 <SimplifiedChatView
@@ -430,7 +444,9 @@ const Chat = () => {
         </div>
 
         {/* Fixed Bottom Bar */}
-        <div className="sticky bottom-0 bg-white px-2 pt-3 md:px-0 md:pb-4">
+        <div className={`sticky bottom-0 pt-3 md:pb-4 ${
+          theme === 'dark' ? 'bg-black' : 'bg-white'
+        }`}>
           <div className="relative flex flex-col items-center gap-3">
             <HelperBoost submitQuery={submitQuery} setInput={setInput} />
             <ChatBottombar

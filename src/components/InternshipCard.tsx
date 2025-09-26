@@ -23,17 +23,15 @@ const InternshipCard = () => {
           {/* Avatar placeholder */}
           <div className="bg-muted h-16 w-16 overflow-hidden rounded-full shadow-md">
             <img
-              src="/krishna-photo.jpeg"
-              alt="Krishna's avatar"
+              src=""
+              alt=""
               className="h-full w-full object-cover"
             />
           </div>
           <div>
             <h2 className="text-foreground text-2xl font-semibold">
-              Krishna Bantola
             </h2>
             <p className="text-muted-foreground text-sm">
-              Intership Application
             </p>
           </div>
         </div>

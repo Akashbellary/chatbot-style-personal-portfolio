@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from '@radix-ui/react-tooltip';
 import { motion } from 'framer-motion';
+import { useTheme } from 'next-themes';
 import {
   BriefcaseBusiness,
   BriefcaseIcon,
@@ -37,9 +38,8 @@ const questions = {
   Me: 'Who are you? I want to know more about you.',
   Projects: 'What are your projects?',
   Skills: 'What are your skills? Give me a list of your soft and hard skills.',
-  Experience: 'What experience do you have? Where have you worked or interned?',
-  Contact:
-    'How can I reach you? What kind of project would make you say "yes" immediately?',
+  Experience: 'What experience do you have?',
+  Contact:'How can I reach you?',
 };
 
 const questionConfig = [
@@ -146,6 +146,7 @@ export default function HelperBoost({
   submitQuery,
   setInput,
 }: HelperBoostProps) {
+  const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(true);
   const [open, setOpen] = useState(false);
 
@@ -180,7 +181,11 @@ export default function HelperBoost({
           >
             <button
               onClick={toggleVisibility}
-              className="flex items-center gap-1 px-3 py-1 text-xs text-gray-500 transition-colors hover:text-gray-700"
+              className={`flex items-center gap-1 px-3 py-1 text-xs transition-colors ${
+                theme === 'dark'
+                  ? 'text-gray-400 hover:text-gray-200'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
             >
               {isVisible ? (
                 <>
@@ -208,9 +213,15 @@ export default function HelperBoost({
                     key={key}
                     onClick={() => handleQuestionClick(key)}
                     variant="outline"
-                    className="border-border hover:bg-border/30 h-auto min-w-[100px] flex-shrink-0 cursor-pointer rounded-xl border bg-white/80 px-4 py-3 shadow-none backdrop-blur-sm transition-none active:scale-95"
+                    className={`h-auto min-w-[100px] flex-shrink-0 cursor-pointer rounded-xl border px-4 py-3 shadow-none backdrop-blur-sm transition-none active:scale-95 ${
+                      theme === 'dark'
+                        ? 'border-gray-600 bg-gray-800/80 hover:bg-gray-700/50'
+                        : 'border-gray-200 bg-white/80 hover:bg-gray-100/30'
+                    }`}
                   >
-                    <div className="flex items-center gap-3 text-gray-700">
+                    <div className={`flex items-center gap-3 ${
+                      theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+                    }`}>
                       <Icon size={18} strokeWidth={2} color={color} />
                       <span className="text-sm font-medium">{key}</span>
                     </div>
@@ -223,17 +234,21 @@ export default function HelperBoost({
                     <TooltipTrigger asChild>
                       <Drawer.Trigger className="group relative flex flex-shrink-0 items-center justify-center">
                         <motion.div
-                          className="hover:bg-border/30 flex h-auto cursor-pointer items-center space-x-1 rounded-xl border border-neutral-200 bg-white/80 px-4 py-3 text-sm backdrop-blur-sm transition-all duration-200 dark:border-neutral-800 dark:bg-neutral-900"
+                          className={`flex h-auto cursor-pointer items-center space-x-1 rounded-xl border px-4 py-3 text-sm backdrop-blur-sm transition-all duration-200 ${
+                            theme === 'dark'
+                              ? 'border-gray-600 bg-gray-800/80 hover:bg-gray-700/50'
+                              : 'border-gray-200 bg-white/80 hover:bg-gray-100/30'
+                          }`}
                           whileHover={{ scale: 1 }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          <div className="flex items-center gap-3 text-gray-700">
+                          <div className={`flex items-center gap-3 ${
+                            theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+                          }`}>
                             <CircleEllipsis
                               className="h-[20px] w-[18px]"
-                              //style={{ color: '#3B82F6' }}
                               strokeWidth={2}
                             />
-                            {/*<span className="text-sm font-medium">More</span>*/}
                           </div>
                         </motion.div>
                       </Drawer.Trigger>
