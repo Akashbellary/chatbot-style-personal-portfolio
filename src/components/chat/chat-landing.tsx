@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Award, Code, GraduationCap, Mail, MessageSquare } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import React from 'react';
 
 interface ChatLandingProps {
@@ -9,6 +10,8 @@ interface ChatLandingProps {
 }
 
 const ChatLanding: React.FC<ChatLandingProps> = ({ submitQuery }) => {
+  const { theme } = useTheme();
+  
   // Suggested questions that the user can click on
   const suggestedQuestions = [
     {
@@ -61,11 +64,13 @@ const ChatLanding: React.FC<ChatLandingProps> = ({ submitQuery }) => {
     >
       {/* Welcome message */}
       <motion.div className="mb-8 text-center" variants={itemVariants}>
-        <h2 className="mb-3 text-2xl font-semibold">
-            I'm Krishna's digital twin
+        <h2 className={`mb-3 text-2xl font-semibold ${
+          theme === 'dark' ? 'text-white' : 'text-gray-900'
+        }`}>
         </h2>
-        <p className="text-muted-foreground mx-auto max-w-md">
-          The first portfolio that fit YOU needs.
+        <p className={`mx-auto max-w-md ${
+          theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+        }`}>
         </p>
       </motion.div>
 
@@ -77,13 +82,19 @@ const ChatLanding: React.FC<ChatLandingProps> = ({ submitQuery }) => {
         {suggestedQuestions.map((question, index) => (
           <motion.button
             key={index}
-            className="bg-accent hover:bg-accent/80 flex w-full items-center rounded-lg px-4 py-3 transition-colors"
+            className={`flex w-full items-center rounded-lg px-4 py-3 transition-colors ${
+              theme === 'dark'
+                ? 'bg-gray-800 hover:bg-gray-700 text-white border border-gray-600'
+                : 'bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-200'
+            }`}
             onClick={() => submitQuery(question.text)}
             variants={itemVariants}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span className="bg-background mr-3 rounded-full p-2">
+            <span className={`mr-3 rounded-full p-2 ${
+              theme === 'dark' ? 'bg-gray-700' : 'bg-white'
+            }`}>
               {question.icon}
             </span>
             <span className="text-left">{question.text}</span>

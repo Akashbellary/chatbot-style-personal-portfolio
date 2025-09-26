@@ -13,10 +13,170 @@ import { X } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'; // Importation correcte pour Next.js 13+
 import { useState } from 'react';
+import { useTheme } from 'next-themes';
 
 // Added a trigger prop to accept custom triggers
 interface WelcomeModalProps {
   trigger?: React.ReactNode;
+}
+
+// Calendar Section Component
+function CalendarSection() {
+  const { theme } = useTheme();
+  const [selectedDate, setSelectedDate] = useState<number>(new Date().getDate());
+  const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+  const [fromEmail, setFromEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+  const getDaysInMonth = (month: number, year: number) => {
+    return new Date(year, month + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (month: number, year: number) => {
+    return new Date(year, month, 1).getDay();
+  };
+
+  const renderCalendarDays = () => {
+    const daysInMonth = getDaysInMonth(selectedMonth, selectedYear);
+    const firstDay = getFirstDayOfMonth(selectedMonth, selectedYear);
+    const days = [];
+
+    // Empty cells for days before the first day of the month
+    for (let i = 0; i < firstDay; i++) {
+      days.push(<div key={`empty-${i}`} className="w-10 h-10"></div>);
+    }
+
+    // Days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const isSelected = day === selectedDate;
+      days.push(
+        <motion.button
+          key={day}
+          onClick={() => setSelectedDate(day)}
+          className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-sm font-medium transition-all duration-200 ${
+            isSelected
+              ? 'border-blue-400 bg-blue-100 text-blue-800 animate-pulse'
+              : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
+          }`}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {day}
+        </motion.button>
+      );
+    }
+
+    return days;
+  };
+
+  const handleSend = () => {
+    alert('This feature is being developed and may not work at this moment.');
+  };
+
+  return (
+    <section className="bg-accent w-full space-y-8 rounded-2xl p-8">
+      {/* Calendar Header - Date/Month/Year selectors */}
+      <div className="bg-yellow-200 rounded-lg p-4 flex justify-between items-center">
+        <select
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(Number(e.target.value))}
+          className="bg-transparent text-yellow-800 font-semibold focus:outline-none"
+        >
+          {months.map((month, index) => (
+            <option key={month} value={index} className="text-yellow-800">
+              {month}
+            </option>
+          ))}
+        </select>
+        
+        <input
+          type="number"
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(Number(e.target.value))}
+          className="bg-transparent text-yellow-800 font-semibold w-20 text-center focus:outline-none"
+          min="2020"
+          max="2030"
+        />
+      </div>
+
+      {/* Days of week header */}
+      <div className="grid grid-cols-7 gap-2 mb-4">
+        {daysOfWeek.map((day, index) => (
+          <div
+            key={`day-${index}`}
+            className="text-center text-sm font-semibold text-gray-600 py-2"
+          >
+            {day}
+          </div>
+        ))}
+      </div>
+
+      {/* Calendar grid */}
+      <div className="grid grid-cols-7 gap-2 mb-6">
+        {renderCalendarDays()}
+      </div>
+
+      {/* Selected date display */}
+      <div className="text-center p-4 bg-white rounded-lg border">
+        <p className="text-lg font-semibold text-gray-900">
+          Selected: {months[selectedMonth]} {selectedDate}, {selectedYear}
+        </p>
+      </div>
+
+      {/* Form section */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <label className="text-sm font-medium text-gray-700">
+            From:
+          </label>
+          <input
+            type="email"
+            value={fromEmail}
+            onChange={(e) => setFromEmail(e.target.value)}
+            placeholder="Who are you? Type your email here"
+            className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="flex items-start gap-3">
+          <label className="text-sm font-medium text-gray-700 mt-2">
+            Message:
+          </label>
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="What do you want to discuss with Akash on this date?"
+            rows={3}
+            className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{ minHeight: '80px' }}
+          />
+        </div>
+      </div>
+
+      {/* Send button */}
+      <div className="flex justify-end">
+        <button
+          onClick={handleSend}
+          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+        >
+          Send
+        </button>
+      </div>
+
+      {/* Development notice */}
+      <p className="text-xs text-center text-gray-500">
+        This feature is being developed so this may not work at this moment.
+      </p>
+    </section>
+  );
 }
 
 export default function WelcomeModal({ trigger }: WelcomeModalProps) {
@@ -31,13 +191,13 @@ export default function WelcomeModal({ trigger }: WelcomeModalProps) {
       onClick={() => setIsOpen(true)}
     >
       <Image
-        src="/logo-krishna.png"
+        src=""
         width={100}
         height={100}
         alt="Logo"
         className="w-6 md:w-8"
       />
-      <span className="sr-only">About Krishna</span>
+      <span className="sr-only"></span>
     </Button>
   );
 
@@ -69,7 +229,7 @@ export default function WelcomeModal({ trigger }: WelcomeModalProps) {
             <DialogHeader className="relative flex flex-row items-start justify-between px-8 pt-8 pb-6">
               <div>
                 <DialogTitle className="flex items-center gap-2 text-4xl font-bold tracking-tight">
-                  Welcome to AI Portfolio
+                  Check my availability here
                 </DialogTitle>
                 <DialogDescription className="mt-2 text-base">
                   {/*My interactive AI portfolio experience*/}
@@ -88,58 +248,7 @@ export default function WelcomeModal({ trigger }: WelcomeModalProps) {
 
             {/* Content area */}
             <div className="space-y-6 overflow-y-auto px-2 py-4 md:px-8">
-              <section className="bg-accent w-full space-y-8 rounded-2xl p-8">
-                {/* What section */}
-                <div className="space-y-3">
-                  <h3 className="text-primary flex items-center gap-2 text-xl font-semibold">
-                    What's ????
-                  </h3>
-                  <p className="text-accent-foreground text-base leading-relaxed">
-                    I'm so excited to present my{' '}
-                    <strong>brand new AI Portfolio.</strong>
-                    <br /> Whether you're a recruiter, a friend, family member,
-                    or just curious, feel free to ask anything you want!
-                  </p>
-                </div>
-
-                {/* Why section */}
-                <div className="space-y-3">
-                  <h3 className="text-primary flex items-center gap-2 text-xl font-semibold">
-                    Why ???
-                  </h3>
-                  <p className="text-accent-foreground text-base leading-relaxed">
-                    Traditional portfolios can be limiting. <br /> They can't
-                    adapt to every visitor's specific needs. <br /> My portfolio
-                    becomes{' '}
-                    <strong>
-                      exactly what you're interested in knowing about me and my
-                      work.
-                    </strong>
-                  </p>
-                </div>
-              </section>
-            </div>
-
-            {/* Footer */}
-            <div className="flex flex-col items-center px-8 pt-4 pb-0 md:pb-8">
-              <Button
-                onClick={() => setIsOpen(false)}
-                className="h-auto rounded-full px-4 py-3"
-                size="sm"
-              >
-                Start Chatting
-              </Button>
-              <div
-                className="mt-6 flex cursor-pointer flex-wrap gap-1 text-center text-sm"
-                onClick={handleContactMe}
-              >
-                <p className="text-muted-foreground">
-                  If you love it, please share it! Feedback is always welcome.
-                </p>
-                <div className="flex cursor-pointer items-center text-blue-500 hover:underline">
-                  Contact me.
-                </div>
-              </div>
+              <CalendarSection />
             </div>
           </motion.div>
         </DialogContent>

@@ -8,12 +8,12 @@ import Image from 'next/image';
 export function Resume() {
   // Resume details
   const resumeDetails = {
-    title: "Krishna's Resume",
+    title: "",
     description: 'Full Stack Developer • AI Specialist',
     fileType: 'PDF',
     lastUpdated: 'August 2025',
     fileSize: '0.45 kb',
-    downloadUrl: '/KrishnaBantolaResume.pdf',
+    downloadUrl: '',
   };
 
   const handleDownload = () => {

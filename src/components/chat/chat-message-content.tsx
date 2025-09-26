@@ -1,8 +1,25 @@
 'use client';
 
 import React from 'react';
-import { Message } from 'ai/react';
-import Markdown from 'react-markdown';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { ExpandableCard } from '@/components/ui/expandable-card';
+import { cn } from '@/lib/utils';
+import { ChatRequestOptions } from 'ai';
+import { type Message } from 'ai/react';
+import { motion } from 'framer-motion';
+import {
+  Calendar,
+  ExternalLink,
+  Github,
+  Globe,
+  MapPin,
+  Sparkles,
+  User,
+} from 'lucide-react';
+import { useMemo, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
   Collapsible,
@@ -10,7 +27,6 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { useMemo, useState } from 'react';
 
 export type ChatMessageContentProps = {
   message: Message;
@@ -84,14 +100,16 @@ function CompactImage({ src, alt }: { src: string; alt: string }) {
 
 function MeCard({ personal }: { personal: any }) {
   return (
-    <div className="bg-accent/50 border-border/60 flex w-full max-w-xl items-center gap-3 rounded-2xl border p-3 shadow-sm">
-      <CompactImage src={personal.profileImage} alt={personal.name} />
-      <div className="flex min-w-0 flex-col">
-        <div className="text-foreground truncate text-sm font-semibold">{personal.name}</div>
-        <div className="text-muted-foreground truncate text-xs">{personal.age} • {personal.location}</div>
-        <div className="text-foreground mt-1 line-clamp-3 text-xs whitespace-pre-line">{personal.description}</div>
+    <ExpandableCard type="me" data={personal}>
+      <div className="bg-accent/50 border-border/60 flex w-full max-w-xl items-center gap-3 rounded-2xl border p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+        <CompactImage src={personal.profileImage} alt={personal.name} />
+        <div className="flex min-w-0 flex-col">
+          <div className="text-foreground truncate text-sm font-semibold">{personal.name}</div>
+          <div className="text-muted-foreground truncate text-xs">{personal.age} • {personal.location}</div>
+          <div className="text-foreground mt-1 line-clamp-3 text-xs whitespace-pre-line">{personal.description}</div>
+        </div>
       </div>
-    </div>
+    </ExpandableCard>
   );
 }
 
@@ -99,24 +117,26 @@ function ProjectCard({ project }: { project: any }) {
   const thumb = project.thumbnail || (project.images && project.images[0]?.src) || '';
   const tech = Array.isArray(project.techStack) ? project.techStack.slice(0, 6).join(', ') : '';
   return (
-    <div className="bg-accent/50 border-border/60 flex w-full max-w-xl items-start gap-3 rounded-2xl border p-3 shadow-sm">
-      <CompactImage src={thumb} alt={project.title} />
-      <div className="flex min-w-0 flex-col">
-        <div className="text-foreground truncate text-sm font-semibold">{project.title}</div>
-        <div className="text-muted-foreground truncate text-[11px]">{project.category}{project.date ? ` • ${project.date}` : ''}</div>
-        <div className="text-foreground mt-1 line-clamp-2 text-xs">{project.description}</div>
-        {tech && <div className="text-muted-foreground mt-1 truncate text-[11px]"><span className="font-medium">Tech:</span> {tech}</div>}
-        {Array.isArray(project.links) && project.links.length > 0 && (
-          <div className="mt-1 flex flex-wrap gap-2">
-            {project.links.slice(0, 3).map((l: any, i: number) => (
-              <a key={i} href={l.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-xs">
-                {l.name}
-              </a>
-            ))}
-          </div>
-        )}
+    <ExpandableCard type="projects" data={project}>
+      <div className="bg-accent/50 border-border/60 flex w-full max-w-xl items-start gap-3 rounded-2xl border p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+        <CompactImage src={thumb} alt={project.title} />
+        <div className="flex min-w-0 flex-col">
+          <div className="text-foreground truncate text-sm font-semibold">{project.title}</div>
+          <div className="text-muted-foreground truncate text-[11px]">{project.category}{project.date ? ` • ${project.date}` : ''}</div>
+          <div className="text-foreground mt-1 line-clamp-2 text-xs">{project.description}</div>
+          {tech && <div className="text-muted-foreground mt-1 truncate text-[11px]"><span className="font-medium">Tech:</span> {tech}</div>}
+          {Array.isArray(project.links) && project.links.length > 0 && (
+            <div className="mt-1 flex flex-wrap gap-2">
+              {project.links.slice(0, 3).map((l: any, i: number) => (
+                <a key={i} href={l.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-xs">
+                  {l.name}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </ExpandableCard>
   );
 }
 
@@ -137,30 +157,32 @@ function SkillsCard({ skills }: { skills: any[] }) {
 
 function ContactCard({ contact }: { contact: any }) {
   return (
-    <div className="bg-accent/50 border-border/60 flex w-full max-w-xl items-start gap-3 rounded-2xl border p-3 shadow-sm">
-      <CompactImage src="/AI Profile.png" alt={contact.name} />
-      <div className="flex min-w-0 flex-col">
-        <div className="text-foreground truncate text-sm font-semibold">{contact.name}</div>
-        <div className="text-muted-foreground truncate text-xs">{contact.handle}</div>
-        <a className="text-blue-600 text-xs hover:underline" href={`mailto:${contact.email}`}>{contact.email}</a>
-        {Array.isArray(contact.socials) && contact.socials.length > 0 && (
-          <div className="mt-1 flex flex-wrap gap-2">
-            {contact.socials.slice(0, 5).map((s: any, i: number) => (
-              <a key={i} href={s.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-xs">
-                {s.name}
-              </a>
-            ))}
-          </div>
-        )}
+    <ExpandableCard type="contact" data={contact}>
+      <div className="bg-accent/50 border-border/60 flex w-full max-w-xl items-start gap-3 rounded-2xl border p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+        <CompactImage src="/AI Profile.png" alt={contact.name} />
+        <div className="flex min-w-0 flex-col">
+          <div className="text-foreground truncate text-sm font-semibold">{contact.name}</div>
+          <div className="text-muted-foreground truncate text-xs">{contact.handle}</div>
+          <a className="text-blue-600 text-xs hover:underline" href={`mailto:${contact.email}`}>{contact.email}</a>
+          {Array.isArray(contact.socials) && contact.socials.length > 0 && (
+            <div className="mt-1 flex flex-wrap gap-2">
+              {contact.socials.slice(0, 5).map((s: any, i: number) => (
+                <a key={i} href={s.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-xs">
+                  {s.name}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </ExpandableCard>
   );
 }
 
 function InternshipCardCompact({ internship }: { internship: any }) {
   return (
     <div className="bg-accent/50 border-border/60 flex w-full max-w-xl items-start gap-3 rounded-2xl border p-3 shadow-sm">
-      <CompactImage src={internship.avatar || '/krishna-photo.jpeg'} alt={internship.name || 'Avatar'} />
+      <CompactImage src={internship.avatar || ''} alt={internship.name || 'Avatar'} />
       <div className="flex min-w-0 flex-col">
         <div className="text-foreground truncate text-sm font-semibold">{internship.name || ''}</div>
         <div className="text-muted-foreground truncate text-xs">{internship.location || ''}</div>
@@ -525,22 +547,22 @@ export default function ChatMessageContent({
           {contentParts.map((content, i) =>
             i % 2 === 0 ? (
               <div key={`text-${i}`} className="prose dark:prose-invert w-full">
-                <Markdown
+                <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
-                    p: ({ children }) => (
+                    p: ({ children }: any) => (
                       <p className="break-words whitespace-pre-wrap text-sm">
                         {children}
                       </p>
                     ),
-                    ul: ({ children }) => (
+                    ul: ({ children }: any) => (
                       <ul className="my-4 list-disc pl-6">{children}</ul>
                     ),
-                    ol: ({ children }) => (
+                    ol: ({ children }: any) => (
                       <ol className="my-4 list-decimal pl-6">{children}</ol>
                     ),
-                    li: ({ children }) => <li className="my-1">{children}</li>,
-                    a: ({ href, children }) => (
+                    li: ({ children }: any) => <li className="my-1">{children}</li>,
+                    a: ({ href, children }: any) => (
                       <a
                         href={href}
                         target="_blank"
@@ -550,13 +572,13 @@ export default function ChatMessageContent({
                         {children}
                       </a>
                     ),
-                    img: ({ src, alt }) => (
+                    img: ({ src, alt }: any) => (
                       <img src={src || ''} alt={alt || ''} className="h-20 w-20 rounded-lg object-cover" />
                     ),
                   }}
                 >
                   {content}
-                </Markdown>
+                </ReactMarkdown>
               </div>
             ) : (
               <CodeBlock key={`code-${i}`} content={content} />
