@@ -51,12 +51,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/AI Profile.png",
+        url: "/Adobe Express - Adobe Express - Flowing_Paint_Hash_Symbol_Animation.gif",
         sizes: "any",
       }
     ],
-    shortcut: "/AI Profile.png?v=2",
-    apple: "/AI Profile.png?v=2",
+    shortcut: "/Adobe Express - Adobe Express - Flowing_Paint_Hash_Symbol_Animation.gif?v=2",
+    apple: "/Adobe Express - Adobe Express - Flowing_Paint_Hash_Symbol_Animation.gif?v=2",
   },
 };
 
