@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, Code, GraduationCap, Mail, MessageSquare } from 'lucide-react';
+import { Award, Code, Mail, MessageSquare } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import React from 'react';
 

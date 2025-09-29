@@ -3,7 +3,7 @@
 
 import { ChatRequestOptions } from 'ai';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import React, { useEffect } from 'react';
 

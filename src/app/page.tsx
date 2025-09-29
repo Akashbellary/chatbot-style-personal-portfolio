@@ -2,7 +2,6 @@
 
 import FluidCursor from '@/components/FluidCursor';
 import { Button } from '@/components/ui/button';
-import WelcomeModal from '@/components/welcome-modal';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -117,7 +116,7 @@ export default function Home() {
           Hello World !!!
         </h2>
         <h1 className="text-4xl font-bold sm:text-5xl md:text-6xl lg:text-7xl">
-          I'm Akash BR
+          I&apos;m Akash BR
         </h1>
       </motion.div>
 

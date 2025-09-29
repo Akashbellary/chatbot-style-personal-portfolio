@@ -29,7 +29,7 @@ import {
 import { useState } from 'react';
 import { Drawer } from 'vaul';
 
-interface HelperBoostProps {
+interface ChatHelperProps {
   submitQuery?: (query: string) => void;
   setInput?: (value: string) => void;
 }
@@ -142,10 +142,9 @@ const AnimatedChevron = () => {
   );
 };
 
-export default function HelperBoost({
+export default function ChatHelper({
   submitQuery,
-  setInput,
-}: HelperBoostProps) {
+}: ChatHelperProps) {
   const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(true);
   const [open, setOpen] = useState(false);
@@ -201,7 +200,7 @@ export default function HelperBoost({
             </button>
           </div>
 
-          {/* HelperBoost Content */}
+          {/* ChatHelper Content */}
           {isVisible && (
             <div className="w-full">
               <div

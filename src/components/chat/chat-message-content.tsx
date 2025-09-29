@@ -1,23 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ExpandableCard } from '@/components/ui/expandable-card';
-import { cn } from '@/lib/utils';
-import { ChatRequestOptions } from 'ai';
 import { type Message } from 'ai/react';
-import { motion } from 'framer-motion';
-import {
-  Calendar,
-  ExternalLink,
-  Github,
-  Globe,
-  MapPin,
-  Sparkles,
-  User,
-} from 'lucide-react';
 import { useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';

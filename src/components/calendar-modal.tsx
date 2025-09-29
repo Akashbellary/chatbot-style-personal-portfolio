@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useForm, ValidationError } from '@formspree/react';
 
 interface CalendarModalProps {
   trigger: React.ReactNode;
@@ -17,6 +18,9 @@ const CalendarModal = ({ trigger }: CalendarModalProps) => {
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [fromEmail, setFromEmail] = useState('');
   const [message, setMessage] = useState('');
+  
+  // Formspree integration - replace "xdkwebgr" with your actual form ID
+  const [state, handleSubmit] = useForm("xdkwebgr");
 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -68,10 +72,45 @@ const CalendarModal = ({ trigger }: CalendarModalProps) => {
     return days;
   };
 
-  const handleSend = () => {
-    // This is just a placeholder - the feature is in development
-    alert('This feature is being developed and may not work at this moment.');
-  };
+  // Create composed message with date
+  const composedMessage = `Date: ${months[selectedMonth]} ${selectedDate}, ${selectedYear}\n\n${message}`;
+
+  // Show success message if form was submitted successfully
+  if (state.succeeded) {
+    return (
+      <div onClick={() => setIsOpen(true)}>
+        {trigger}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 flex items-center justify-center z-[80] p-4"
+              onClick={() => setIsOpen(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className={`w-full max-w-md rounded-2xl p-8 text-center ${
+                  theme === 'dark' 
+                    ? 'bg-gray-900 border border-gray-600' 
+                    : 'bg-white border border-gray-200'
+                }`}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <p className={`text-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                  Thanks! Your message has been sent.
+                </p>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -175,8 +214,29 @@ const CalendarModal = ({ trigger }: CalendarModalProps) => {
                   </p>
                 </div>
 
+                {/* Debug info for development */}
+                <div className="bg-red-100 border border-red-300 p-3 mb-4 rounded">
+                  <pre className="text-xs">
+                    State: {JSON.stringify(state, null, 2)}
+                  </pre>
+                </div>
+
+                {/* Error display */}
+                {state.errors && state.errors.length > 0 && (
+                  <div className="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded mb-4">
+                    <strong>Errors:</strong>
+                    <ul>
+                      {state.errors.map((error, index) => (
+                        <li key={index}>{error.message}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 {/* Form section */}
-                <div className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <input type="hidden" name="date" value={`${months[selectedMonth]} ${selectedDate}, ${selectedYear}`} />
+                  
                   <div className="flex items-center gap-3">
                     <label className={`text-sm font-medium ${
                       theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
@@ -184,15 +244,23 @@ const CalendarModal = ({ trigger }: CalendarModalProps) => {
                       From:
                     </label>
                     <input
+                      id="email"
                       type="email"
+                      name="email"
                       value={fromEmail}
                       onChange={(e) => setFromEmail(e.target.value)}
                       placeholder="Who are you? Type your email here"
+                      required
                       className={`flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         theme === 'dark'
                           ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
                           : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                       }`}
+                    />
+                    <ValidationError 
+                      prefix="Email" 
+                      field="email"
+                      errors={state.errors}
                     />
                   </div>
 
@@ -202,36 +270,51 @@ const CalendarModal = ({ trigger }: CalendarModalProps) => {
                     }`}>
                       Message:
                     </label>
-                    <textarea
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="What do you want to discuss with Akash on this date?"
-                      rows={3}
-                      className={`flex-1 px-3 py-2 rounded-lg border resize-y focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                        theme === 'dark'
-                          ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                          : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                      }`}
-                      style={{ minHeight: '80px' }}
-                    />
+                    <div className="flex-1">
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={composedMessage}
+                        onChange={(e) => {
+                          const datePrefix = `Date: ${months[selectedMonth]} ${selectedDate}, ${selectedYear}\n\n`;
+                          const newMessage = e.target.value.replace(datePrefix, '');
+                          setMessage(newMessage);
+                        }}
+                        placeholder="What do you want to discuss with Akash on this date?"
+                        rows={3}
+                        required
+                        className={`w-full px-3 py-2 rounded-lg border resize-y focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                          theme === 'dark'
+                            ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
+                            : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                        }`}
+                        style={{ minHeight: '80px' }}
+                      />
+                      <ValidationError 
+                        prefix="Message" 
+                        field="message"
+                        errors={state.errors}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* Send button */}
-                <div className="flex justify-end">
-                  <button
-                    onClick={handleSend}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                  >
-                    Send
-                  </button>
-                </div>
+                  {/* Send button */}
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      disabled={state.submitting}
+                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50"
+                    >
+                      {state.submitting ? 'Sending...' : 'Send'}
+                    </button>
+                  </div>
+                </form>
 
                 {/* Development notice */}
                 <p className={`text-xs text-center ${
                   theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
                 }`}>
-                  This feature is being developed so this may not work at this moment.
+                  Calendar messages are sent via Formspree. Check debug info above for submission status.
                 </p>
               </div>
             </motion.div>

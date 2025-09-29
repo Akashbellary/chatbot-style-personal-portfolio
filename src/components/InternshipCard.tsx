@@ -2,13 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { CalendarDays, Code2, Globe } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 const InternshipCard = () => {
   const openMail = () => {
     window.open('mailto:mrkrisshu@gmail.com', '_blank');
   };
-  const router = useRouter();
 
   return (
     <motion.div
