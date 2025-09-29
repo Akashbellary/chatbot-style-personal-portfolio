@@ -1,6 +1,6 @@
 // src/components/chat/tool-renderer.tsx
 import { Contact } from '../contact';
-import Crazy from '../crazy';
+
 import InternshipCard from '../InternshipCard';
 import { Presentation } from '../presentation';
 import AllProjects from '../projects/AllProjects';
@@ -67,12 +67,7 @@ export default function ToolRenderer({
 
           
 
-          case 'getCrazy':
-            return (
-              <div key={toolCallId} className="w-full rounded-lg">
-                <Crazy />
-              </div>
-            );
+
 
           case 'getInternship':
             return (

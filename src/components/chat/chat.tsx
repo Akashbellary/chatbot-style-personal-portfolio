@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/chat/chat-bubble';
 import WelcomeModal from '@/components/welcome-modal';
 import { Info, Calendar } from 'lucide-react';
-import HelperBoost from './HelperBoost';
+import ChatHelper from './ChatHelper';
 
 // ClientOnly component for client-side rendering
 //@ts-ignore
@@ -448,7 +448,7 @@ const Chat = () => {
           theme === 'dark' ? 'bg-black' : 'bg-white'
         }`}>
           <div className="relative flex flex-col items-center gap-3">
-            <HelperBoost submitQuery={submitQuery} setInput={setInput} />
+            <ChatHelper submitQuery={submitQuery} setInput={setInput} />
             <ChatBottombar
               input={input}
               handleInputChange={handleInputChange}

@@ -9,6 +9,7 @@ import {
 } from '@radix-ui/react-tooltip';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
+// Cleaned imports and single interface
 import {
   BriefcaseBusiness,
   BriefcaseIcon,
@@ -29,10 +30,12 @@ import {
 import { useState } from 'react';
 import { Drawer } from 'vaul';
 
+
 interface HelperBoostProps {
   submitQuery?: (query: string) => void;
   setInput?: (value: string) => void;
 }
+
 
 const questions = {
   Me: 'Who are you? I want to know more about you. And i want to see your resume.',
@@ -50,7 +53,6 @@ const questionConfig = [
   { key: 'Contact', color: '#C19433', icon: UserRoundSearch },
 ];
 
-// Helper drawer data
 const specialQuestions = [
   'Mountain Bike you said?? Show me!',
   'Who are you?',
@@ -95,10 +97,7 @@ const questionsByCategory = [
     id: 'skills',
     name: 'Skills',
     icon: GraduationCapIcon,
-    questions: [
-      'What are your skills?',
-      
-    ],
+    questions: ['What are your skills?'],
   },
   {
     id: 'experience',
@@ -122,30 +121,17 @@ const questionsByCategory = [
   },
 ];
 
-// Animated Chevron component
-const AnimatedChevron = () => {
-  return (
-    <motion.div
-      animate={{
-        y: [0, -4, 0], // Subtle up and down motion
-      }}
-      transition={{
-        duration: 1.5,
-        ease: 'easeInOut',
-        repeat: Infinity,
-        repeatType: 'loop',
-      }}
-      className="text-primary mb-1.5"
-    >
-      <ChevronUp size={16} />
-    </motion.div>
-  );
-};
+const AnimatedChevron = () => (
+  <motion.div
+    animate={{ y: [0, -4, 0] }}
+    transition={{ duration: 1.5, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop' }}
+    className="text-primary mb-1.5"
+  >
+    <ChevronUp size={16} />
+  </motion.div>
+);
 
-export default function HelperBoost({
-  submitQuery,
-  setInput,
-}: HelperBoostProps) {
+const ChatHelper: React.FC<HelperBoostProps> = ({ submitQuery, setInput }) => {
   const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(true);
   const [open, setOpen] = useState(false);
@@ -172,13 +158,7 @@ export default function HelperBoost({
       <Drawer.Root open={open} onOpenChange={setOpen}>
         <div className="w-full">
           {/* Toggle Button */}
-          <div
-            className={
-              isVisible
-                ? 'mb-2 flex justify-center'
-                : 'mb-0 flex justify-center'
-            }
-          >
+          <div className={isVisible ? 'mb-2 flex justify-center' : 'mb-0 flex justify-center'}>
             <button
               onClick={toggleVisibility}
               className={`flex items-center gap-1 px-3 py-1 text-xs transition-colors ${
@@ -204,10 +184,7 @@ export default function HelperBoost({
           {/* HelperBoost Content */}
           {isVisible && (
             <div className="w-full">
-              <div
-                className="flex w-full flex-wrap gap-1 md:gap-3"
-                style={{ justifyContent: 'safe center' }}
-              >
+              <div className="flex w-full flex-wrap gap-1 md:gap-3" style={{ justifyContent: 'safe center' }}>
                 {questionConfig.map(({ key, color, icon: Icon }) => (
                   <Button
                     key={key}
@@ -219,9 +196,7 @@ export default function HelperBoost({
                         : 'border-gray-200 bg-white/80 hover:bg-gray-100/30'
                     }`}
                   >
-                    <div className={`flex items-center gap-3 ${
-                      theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-                    }`}>
+                    <div className={`flex items-center gap-3 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>
                       <Icon size={18} strokeWidth={2} color={color} />
                       <span className="text-sm font-medium">{key}</span>
                     </div>
@@ -242,13 +217,8 @@ export default function HelperBoost({
                           whileHover={{ scale: 1 }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          <div className={`flex items-center gap-3 ${
-                            theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-                          }`}>
-                            <CircleEllipsis
-                              className="h-[20px] w-[18px]"
-                              strokeWidth={2}
-                            />
+                          <div className={`flex items-center gap-3 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>
+                            <CircleEllipsis className="h-[20px] w-[18px]" strokeWidth={2} />
                           </div>
                         </motion.div>
                       </Drawer.Trigger>
@@ -269,10 +239,7 @@ export default function HelperBoost({
           <Drawer.Content className="fixed right-0 bottom-0 left-0 z-100 mt-24 flex h-[80%] flex-col rounded-t-[10px] bg-gray-100 outline-none lg:h-[60%]">
             <div className="flex-1 overflow-y-auto rounded-t-[10px] bg-white p-4">
               <div className="mx-auto max-w-md space-y-4">
-                <div
-                  aria-hidden
-                  className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-gray-300"
-                />
+                <div aria-hidden className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-gray-300" />
                 <div className="mx-auto w-full max-w-md">
                   <div className="space-y-8 pb-16">
                     {questionsByCategory.map((category) => (
@@ -293,9 +260,8 @@ export default function HelperBoost({
       </Drawer.Root>
     </>
   );
-}
+};
 
-// Component for each category section
 interface CategorySectionProps {
   name: string;
   Icon: React.ElementType;
@@ -303,23 +269,14 @@ interface CategorySectionProps {
   onQuestionClick: (question: string) => void;
 }
 
-function CategorySection({
-  name,
-  Icon,
-  questions,
-  onQuestionClick,
-}: CategorySectionProps) {
+function CategorySection({ name, Icon, questions, onQuestionClick }: CategorySectionProps) {
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2.5 px-1">
         <Icon className="h-5 w-5" />
-        <Drawer.Title className="text-[22px] font-medium text-gray-900">
-          {name}
-        </Drawer.Title>
+        <Drawer.Title className="text-[22px] font-medium text-gray-900">{name}</Drawer.Title>
       </div>
-
       <Separator className="my-4" />
-
       <div className="space-y-3">
         {questions.map((question, index) => (
           <QuestionItem
@@ -334,7 +291,6 @@ function CategorySection({
   );
 }
 
-// Component for each question item with animated chevron
 interface QuestionItemProps {
   question: string;
   onClick: () => void;
@@ -343,7 +299,6 @@ interface QuestionItemProps {
 
 function QuestionItem({ question, onClick, isSpecial }: QuestionItemProps) {
   const [isHovered, setIsHovered] = useState(false);
-
   return (
     <motion.button
       className={cn(
@@ -356,35 +311,21 @@ function QuestionItem({ question, onClick, isSpecial }: QuestionItemProps) {
       onClick={onClick}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      whileHover={{
-        backgroundColor: isSpecial ? undefined : '#F0F0F2',
-      }}
-      whileTap={{
-        scale: 0.98,
-        backgroundColor: isSpecial ? undefined : '#E8E8EA',
-      }}
+      whileHover={{ backgroundColor: isSpecial ? undefined : '#F0F0F2' }}
+      whileTap={{ scale: 0.98, backgroundColor: isSpecial ? undefined : '#E8E8EA' }}
     >
       <div className="flex items-center">
         {isSpecial && <Sparkles className="mr-2 h-4 w-4 text-white" />}
-        <span className={isSpecial ? 'font-medium text-white' : ''}>
-          {question}
-        </span>
+        <span className={isSpecial ? 'font-medium text-white' : ''}>{question}</span>
       </div>
       <motion.div
         animate={{ x: isHovered ? 4 : 0 }}
-        transition={{
-          type: 'spring',
-          stiffness: 400,
-          damping: 25,
-        }}
+        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       >
-        <ChevronRight
-          className={cn(
-            'h-5 w-5 shrink-0',
-            isSpecial ? 'text-white' : 'text-primary'
-          )}
-        />
+        <ChevronRight className={cn('h-5 w-5 shrink-0', isSpecial ? 'text-white' : 'text-primary')} />
       </motion.div>
     </motion.button>
   );
 }
+
+export default ChatHelper;
