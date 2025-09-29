@@ -35,7 +35,7 @@ interface HelperBoostProps {
 }
 
 const questions = {
-  Me: 'Who are you? I want to know more about you.',
+  Me: 'Who are you? I want to know more about you. And i want to see your resume.',
   Projects: 'What are your projects?',
   Skills: 'What are your skills? Give me a list of your soft and hard skills.',
   Experience: 'What experience do you have?',
