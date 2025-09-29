@@ -2,6 +2,7 @@
 
 import FluidCursor from '@/components/FluidCursor';
 import { Button } from '@/components/ui/button';
+import CalendarModal from '@/components/calendar-modal';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -88,17 +89,18 @@ export default function Home() {
       </div>
 
       <div className="absolute top-6 left-6 z-20">
-        <button
-          onClick={() => goToChat('I want to connect with you!')}
-          className="relative flex cursor-pointer items-center gap-2 rounded-full border bg-white/30 px-4 py-1.5 text-sm font-medium text-black shadow-md backdrop-blur-lg transition hover:bg-white/60 dark:border-white dark:text-white dark:hover:bg-neutral-800"
-        >
-          {/* Green pulse dot */}
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-          </span>
-          I want to connect with you!
-        </button>
+        <CalendarModal
+          trigger={
+            <button className="relative flex cursor-pointer items-center gap-2 rounded-full border bg-white/30 px-4 py-1.5 text-sm font-medium text-black shadow-md backdrop-blur-lg transition hover:bg-white/60 dark:border-white dark:text-white dark:hover:bg-neutral-800">
+              {/* Green pulse dot */}
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+              </span>
+              I want to connect with you!
+            </button>
+          }
+        />
       </div>
 
       {/* header */}

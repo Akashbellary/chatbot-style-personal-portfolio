@@ -60,7 +60,7 @@ export async function POST(req: Request) {
     const msg = data?.choices?.[0]?.message || {};
     const rawContent = (msg?.content || '').trim();
     const rawReason = (msg?.reasoning_content || '').trim();
-    let raw = (rawContent || rawReason || '').trim();
+    const raw = (rawContent || rawReason || '').trim();
     console.log('[classify-multi] raw LLM reply:', raw);
     let itemsOut: { natural: string; card: string }[] = [];
     try {

@@ -6,12 +6,60 @@ import { type Message } from 'ai/react';
 import { useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Image from 'next/image';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+
+// Type definitions for better type safety
+interface ProjectLink {
+  url: string;
+  label: string;
+}
+
+interface Project {
+  title: string;
+  description: string;
+  links: ProjectLink[];
+}
+
+interface Skill {
+  name: string;
+  level?: string;
+}
+
+interface Social {
+  platform: string;
+  url: string;
+  username?: string;
+}
+
+interface Contact {
+  email?: string;
+  socials: Social[];
+}
+
+interface PersonalInfo {
+  name?: string;
+  bio?: string;
+  location?: string;
+}
+
+interface Achievement {
+  title: string;
+  description: string;
+  links: ProjectLink[];
+}
+
+interface Internship {
+  company: string;
+  role: string;
+  duration: string;
+  description?: string;
+}
 
 export type ChatMessageContentProps = {
   message: Message;
@@ -74,16 +122,17 @@ const CodeBlock = ({ content }: { content: string }) => {
 function CompactImage({ src, alt }: { src: string; alt: string }) {
   if (!src) return null;
   return (
-    <img
+    <Image
       src={src}
       alt={alt}
+      width={80}
+      height={80}
       className="h-20 w-20 rounded-lg object-cover"
-      loading="lazy"
     />
   );
 }
 
-function MeCard({ personal }: { personal: any }) {
+function MeCard({ personal }: { personal: PersonalInfo }) {
   return (
     <ExpandableCard type="me" data={personal}>
       <div className="bg-accent/50 border-border/60 flex w-full max-w-xl items-center gap-3 rounded-2xl border p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
@@ -98,7 +147,7 @@ function MeCard({ personal }: { personal: any }) {
   );
 }
 
-function ProjectCard({ project }: { project: any }) {
+function ProjectCard({ project }: { project: Project }) {
   const thumb = project.thumbnail || (project.images && project.images[0]?.src) || '';
   const tech = Array.isArray(project.techStack) ? project.techStack.slice(0, 6).join(', ') : '';
   return (
@@ -112,7 +161,7 @@ function ProjectCard({ project }: { project: any }) {
           {tech && <div className="text-muted-foreground mt-1 truncate text-[11px]"><span className="font-medium">Tech:</span> {tech}</div>}
           {Array.isArray(project.links) && project.links.length > 0 && (
             <div className="mt-1 flex flex-wrap gap-2">
-              {project.links.slice(0, 3).map((l: any, i: number) => (
+              {project.links.slice(0, 3).map((l: ProjectLink, i: number) => (
                 <a key={i} href={l.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-xs">
                   {l.name}
                 </a>
@@ -125,11 +174,11 @@ function ProjectCard({ project }: { project: any }) {
   );
 }
 
-function SkillsCard({ skills }: { skills: any[] }) {
+function SkillsCard({ skills }: { skills: Skill[] }) {
   return (
     <div className="bg-accent/50 border-border/60 w-full max-w-xl rounded-2xl border p-3 shadow-sm">
       <div className="grid grid-cols-1 gap-2">
-        {skills.slice(0, 6).map((s: any, i: number) => (
+        {skills.slice(0, 6).map((s: Skill, i: number) => (
           <div key={i} className="flex items-start gap-2">
             <div className="text-foreground shrink-0 text-xs font-semibold">{s.category}:</div>
             <div className="text-muted-foreground text-xs">{Array.isArray(s.skills) ? s.skills.join(', ') : ''}</div>
@@ -140,7 +189,7 @@ function SkillsCard({ skills }: { skills: any[] }) {
   );
 }
 
-function ContactCard({ contact }: { contact: any }) {
+function ContactCard({ contact }: { contact: Contact }) {
   return (
     <ExpandableCard type="contact" data={contact}>
       <div className="bg-accent/50 border-border/60 flex w-full max-w-xl items-start gap-3 rounded-2xl border p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer">

@@ -20,11 +20,10 @@ const InternshipCard = () => {
         <div className="flex items-center gap-4">
           {/* Avatar placeholder */}
           <div className="bg-muted h-16 w-16 overflow-hidden rounded-full shadow-md">
-            <img
-              src=""
-              alt=""
-              className="h-full w-full object-cover"
-            />
+            {/* Placeholder for company logo */}
+            <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center text-white font-bold">
+              A
+            </div>
           </div>
           <div>
             <h2 className="text-foreground text-2xl font-semibold">
