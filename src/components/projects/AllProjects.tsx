@@ -1,6 +1,6 @@
 "use client";
 import { Card, Carousel } from "@/components/projects/apple-cards-carousel";
-import { ProjectContent, type ProjectProps } from "@/components/projects/Data";
+import { ProjectContent, type ProjectProps } from "@/components/projects/ProjectContent";
 import { useEffect, useState } from "react";
 
 export default function AllProjects() {

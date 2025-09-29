@@ -7,30 +7,18 @@ import Image from 'next/image';
 
 export function Resume() {
   // Resume details
+
   const resumeDetails = {
-    title: "",
     description: 'Full Stack Developer • AI Specialist',
     fileType: 'PDF',
     lastUpdated: 'August 2025',
     fileSize: '0.45 kb',
-    downloadUrl: '',
-  };
-
-  const handleDownload = () => {
-    // Create a link element
-    const link = document.createElement('a');
-    link.href = resumeDetails.downloadUrl;
-    link.download = resumeDetails.downloadUrl.split('/').pop() || 'resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   return (
     <div className="mx-auto w-full py-8 font-sans">
       <motion.div
-        onClick={handleDownload}
-        className="group relative cursor-pointer overflow-hidden rounded-xl bg-accent p-0 transition-all duration-300"
+        className="group relative overflow-hidden rounded-xl bg-accent p-0 transition-all duration-300"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.0, ease: 'easeOut' }}
@@ -41,7 +29,7 @@ export function Resume() {
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-medium text-foreground">
-                {resumeDetails.title}
+                Resume
               </h3>
               <p className="text-sm text-muted-foreground">
                 {resumeDetails.description}

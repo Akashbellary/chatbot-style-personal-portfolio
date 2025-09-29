@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTheme } from 'next-themes';
@@ -17,6 +18,9 @@ const CalendarModal = ({ trigger }: CalendarModalProps) => {
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [fromEmail, setFromEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [error, setError] = useState<string>('');
+  const [state, handleSubmit] = useForm("xdkwebgr"); // Replace with your Formspree form ID
+  const [debugInfo, setDebugInfo] = useState<string>('');
 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -68,10 +72,20 @@ const CalendarModal = ({ trigger }: CalendarModalProps) => {
     return days;
   };
 
-  const handleSend = () => {
-    // This is just a placeholder - the feature is in development
-    alert('This feature is being developed and may not work at this moment.');
-  };
+
+  // Compose the message to include the selected date
+  const composedMessage = `Date: ${months[selectedMonth]} ${selectedDate}, ${selectedYear}\n\n${message}`;
+
+  // Debug: log state changes
+  useEffect(() => {
+    setDebugInfo(
+      `Formspree State:\n` +
+      `submitting: ${state.submitting}\n` +
+      `succeeded: ${state.succeeded}\n` +
+      `errors: ${JSON.stringify(state.errors)}\n` +
+      (error ? `Custom Error: ${error}\n` : '')
+    );
+  }, [state, error]);
 
   return (
     <>
@@ -175,64 +189,74 @@ const CalendarModal = ({ trigger }: CalendarModalProps) => {
                   </p>
                 </div>
 
-                {/* Form section */}
-                <div className="space-y-4">
+                {/* Formspree Contact Form */}
+                <form
+                  onSubmit={async e => {
+                    e.preventDefault();
+                    setDebugInfo('Submitting form...');
+                    setError('');
+                    // Log form data
+                    const formData = {
+                      email: fromEmail,
+                      message: composedMessage,
+                      date: `${months[selectedMonth]} ${selectedDate}, ${selectedYear}`,
+                    };
+                    setDebugInfo(prev => prev + '\nForm Data: ' + JSON.stringify(formData));
+                    try {
+                      // Set textarea to composedMessage before submit
+                      setMessage(composedMessage);
+                      await handleSubmit(e);
+                    } catch (err: any) {
+                      setError(err?.message || 'Unknown error');
+                    }
+                  }}
+                  className="space-y-4"
+                >
+                  {/* Debug info display */}
+                  <pre className="text-xs text-red-500 bg-gray-100 p-2 rounded-lg mb-2 whitespace-pre-wrap">{debugInfo}</pre>
                   <div className="flex items-center gap-3">
-                    <label className={`text-sm font-medium ${
-                      theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-                    }`}>
-                      From:
-                    </label>
+                    <label className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>From:</label>
                     <input
+                      id="email"
                       type="email"
+                      name="email"
                       value={fromEmail}
-                      onChange={(e) => setFromEmail(e.target.value)}
+                      onChange={e => setFromEmail(e.target.value)}
+                      required
                       placeholder="Who are you? Type your email here"
-                      className={`flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                        theme === 'dark'
-                          ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                          : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                      }`}
+                      className={`flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'}`}
                     />
+                    <ValidationError prefix="Email" field="email" errors={state.errors} />
                   </div>
-
                   <div className="flex items-start gap-3">
-                    <label className={`text-sm font-medium mt-2 ${
-                      theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-                    }`}>
-                      Message:
-                    </label>
+                    <label className={`text-sm font-medium mt-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Message:</label>
                     <textarea
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
+                      id="message"
+                      name="message"
+                      value={composedMessage}
+                      onChange={e => setMessage(e.target.value)}
+                      required
                       placeholder="What do you want to discuss with Akash on this date?"
                       rows={3}
-                      className={`flex-1 px-3 py-2 rounded-lg border resize-y focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                        theme === 'dark'
-                          ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                          : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                      }`}
+                      className={`flex-1 px-3 py-2 rounded-lg border resize-y focus:outline-none focus:ring-2 focus:ring-blue-500 ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'}`}
                       style={{ minHeight: '80px' }}
                     />
+                    <ValidationError prefix="Message" field="message" errors={state.errors} />
                   </div>
-                </div>
-
-                {/* Send button */}
-                <div className="flex justify-end">
-                  <button
-                    onClick={handleSend}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                  >
-                    Send
-                  </button>
-                </div>
-
-                {/* Development notice */}
-                <p className={`text-xs text-center ${
-                  theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
-                }`}>
-                  This feature is being developed so this may not work at this moment.
-                </p>
+                  {/* Hidden field for date */}
+                  <input type="hidden" name="date" value={`${months[selectedMonth]} ${selectedDate}, ${selectedYear}`} />
+                  <div className="flex justify-end">
+                    <button type="submit" disabled={state.submitting} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                      Send
+                    </button>
+                  </div>
+                  {error && (
+                    <p className="text-red-600 text-center font-medium">Error: {error}</p>
+                  )}
+                  {state.succeeded && (
+                    <p className={`text-green-600 text-center font-medium`}>Message sent! I'll get back to you soon.</p>
+                  )}
+                </form>
               </div>
             </motion.div>
           </motion.div>
