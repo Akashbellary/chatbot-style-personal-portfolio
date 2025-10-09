@@ -146,7 +146,10 @@
       "description": "AI-powered profiling of Reddit users using embeddings, Pinecone, and NVIDIA Llama.",
       "techStack": ["Flask", "Reddit API", "SentenceTransformers", "Pinecone", "NVIDIA Llama", "NLP"],
       "date": "2025",
-      "links": [{ "name": "github", "url": "https://github.com/Akashbellary/reddit_user_persona" }],
+      "links": [
+        { "name": "github", "url": "https://github.com/Akashbellary/reddit_user_persona" },
+        { "name": "demo", "url": "https://reddit-user-analysis.vercel.app/" }
+      ],
       "images": [{ "src": "/ProjectImages/Reddit_Persona.jpg", "alt": "Reddit Persona Generator" }],
       "thumbnail": "/ProjectImages/Reddit_Persona.jpg"
     },
